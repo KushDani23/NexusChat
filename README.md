@@ -1,4 +1,4 @@
-# Real-Time Web Chat Application
+# NexusChat | Real-Time Web Chat Application
 ### WhatsApp / Telegram Style · Java WebSocket Backend · Vanilla JS Frontend
 
 ---
