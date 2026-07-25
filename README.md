@@ -213,5 +213,3 @@ Browser (Port 8080)               Server (Java)
 | Logging  | Java java.nio.file (file append) |
 
 ---
-
-*Built with ❤️ using Core Java and Vanilla JavaScript — no Spring Boot, no database, no frontend frameworks.*
