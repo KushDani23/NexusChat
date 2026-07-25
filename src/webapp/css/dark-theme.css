@@ -1,0 +1,102 @@
+/* ============================================================
+   dark-theme.css  –  NexusChat Dark Mode
+   Premium dark palette: #0F172A base, #3B82F6 accent
+   ============================================================ */
+
+[data-theme="dark"] {
+    /* ── Backgrounds ─────────────────────────────── */
+    --bg-app:          #0F172A;
+    --bg-primary:      #0F172A;
+    --bg-secondary:    #0F172A;
+    --bg-sidebar:      #111827;
+    --bg-chat:         #0F172A;
+    --bg-header:       #111827;
+    --bg-input:        #1E293B;
+    --bg-search:       #1E293B;
+    --bg-elevated:     #1E293B;
+    --bg-modal:        #1E293B;
+    --bg-overlay:      rgba(0, 0, 0, 0.72);
+    --bg-hover:        rgba(59, 130, 246, 0.08);
+    --bg-active:       rgba(59, 130, 246, 0.12);
+
+    /* ── Text ────────────────────────────────────── */
+    --text-primary:    #F8FAFC;
+    --text-secondary:  #94A3B8;
+    --text-muted:      #475569;
+    --text-inverse:    #0F172A;
+    --text-message:    #F1F5F9;
+    --text-on-accent:  #ffffff;
+
+    /* ── Accents ─────────────────────────────────── */
+    --accent:          #3B82F6;
+    --accent-hover:    #2563EB;
+    --accent-group:    #3B82F6;
+    --accent-send:     #3B82F6;
+    --accent-light:    rgba(59, 130, 246, 0.12);
+    --accent-glow:     rgba(59, 130, 246, 0.28);
+    --accent-2:        #22C55E;
+
+    /* ── Bubbles ─────────────────────────────────── */
+    --bubble-sent:          linear-gradient(145deg, #2563EB 0%, #3B82F6 100%);
+    --bubble-sent-text:     #ffffff;
+    --bubble-received:      #1E293B;
+    --bubble-recv-text:     #F1F5F9;
+    --bubble-system:        rgba(59, 130, 246, 0.08);
+    --system-text:          #60A5FA;
+
+    /* ── Borders ─────────────────────────────────── */
+    --border-color:    #334155;
+    --border-subtle:   rgba(255, 255, 255, 0.05);
+    --sidebar-divider: #1E293B;
+
+    /* ── Shadows ─────────────────────────────────── */
+    --shadow:          rgba(0, 0, 0, 0.5);
+    --shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md:       0 4px 20px rgba(0, 0, 0, 0.6);
+    --shadow-lg:       0 24px 64px rgba(0, 0, 0, 0.8), 0 8px 24px rgba(0, 0, 0, 0.6);
+    --bubble-shadow:   none;
+    --header-shadow:   0 1px 0 #334155;
+
+    /* ── Status ──────────────────────────────────── */
+    --status-online:   #22C55E;
+    --status-offline:  #334155;
+    --status-away:     #F59E0B;
+
+    /* ── Scrollbar ───────────────────────────────── */
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: #334155;
+    --scrollbar-hover: #475569;
+
+    /* ── Receipts ────────────────────────────────── */
+    --receipt-sent:       rgba(255, 255, 255, 0.5);
+    --receipt-delivered:  rgba(255, 255, 255, 0.6);
+    --receipt-read:       #93C5FD;
+    --receipt-error:      #F87171;
+
+    /* ── Input ───────────────────────────────────── */
+    --input-border:    transparent;
+    --input-focus:     #3B82F6;
+    --input-shadow:    0 0 0 2px rgba(59, 130, 246, 0.25);
+
+    /* ── Toggle ──────────────────────────────────── */
+    --toggle-track:    #334155;
+    --toggle-thumb:    #3B82F6;
+
+    /* ── Unread ──────────────────────────────────── */
+    --unread-bg:       #3B82F6;
+    --unread-text:     #ffffff;
+    --highlight-bg:    rgba(59, 130, 246, 0.10);
+
+    /* ── Login ───────────────────────────────────── */
+    --login-bg:        radial-gradient(ellipse at 50% 0%, #1E293B 0%, #0F172A 60%);
+    --login-card-bg:   #111827;
+    --login-shadow:    0 0 0 1px #334155, 0 24px 64px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    /* ── Avatar ring ─────────────────────────────── */
+    --avatar-ring:     rgba(59, 130, 246, 0.35);
+
+    /* ── Banner ──────────────────────────────────── */
+    --banner-reconnecting: #D97706;
+    --banner-disconnected: #DC2626;
+    --banner-connected:    #16A34A;
+}

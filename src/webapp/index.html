@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NexusChat – Real-Time Messenger. Fast, private group and direct messaging with read receipts and dark mode." />
+    <meta name="theme-color" content="#3b82f6" />
+    <title>NexusChat – Real-Time Messenger</title>
+
+    <!-- Prevent FOUC: apply saved theme before rendering -->
+    <script>
+        (function(){
+            try {
+                var t = localStorage.getItem('chatAppTheme');
+                if (t === 'dark') document.documentElement.setAttribute('data-theme','dark');
+                else if (t === 'light') document.documentElement.setAttribute('data-theme','light');
+                else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+                    document.documentElement.setAttribute('data-theme','dark');
+                else document.documentElement.setAttribute('data-theme','dark');
+            } catch(e) {}
+        })();
+    </script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/light-theme.css" />
+    <link rel="stylesheet" href="css/dark-theme.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- CONNECTION BANNER -->
+<div id="connectionBanner" role="status" aria-live="polite">
+    <span class="banner-dot"></span>
+    <span id="bannerText">Reconnecting…</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     LOGIN SCREEN
+═══════════════════════════════════════════════════════════ -->
+<div id="loginScreen">
+    <div class="login-card" role="main">
+        <div class="login-logo">
+            <div class="logo-icon" aria-hidden="true">⚡</div>
+            <h1>NexusChat</h1>
+            <p>Connect and chat in real-time</p>
+        </div>
+
+        <form class="login-form" onsubmit="return false;">
+            <div class="input-group">
+                <label for="usernameInput">Display Name</label>
+                <input
+                    type="text"
+                    id="usernameInput"
+                    placeholder="Choose a unique username…"
+                    maxlength="20"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    aria-label="Username"
+                />
+            </div>
+            <button type="submit" id="connectBtn" class="connect-btn">
+                Get Started →
+            </button>
+        </form>
+
+        <p id="loginError" class="login-error" role="alert" aria-live="polite"></p>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN CHAT UI
+═══════════════════════════════════════════════════════════ -->
+<div id="chatUI" class="hidden" aria-label="Chat application">
+
+    <!-- Mobile sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- ── SIDEBAR ── -->
+    <aside id="sidebar" aria-label="Conversations">
+
+        <!-- Header -->
+        <header class="sidebar-header">
+            <div class="sidebar-user">
+                <div class="user-avatar" id="currentUserAvatar" aria-hidden="true">U</div>
+                <div class="user-name-wrap">
+                    <span class="user-name" id="currentUserName">User</span>
+                    <span class="user-status-text">● Active now</span>
+                </div>
+            </div>
+
+            <div class="sidebar-actions">
+                <div class="theme-toggle-wrap" title="Toggle dark / light mode">
+                    <span class="theme-icon sun-icon" aria-hidden="true">☀️</span>
+                    <button id="themeToggle" aria-label="Switch to dark mode" title="Toggle theme">
+                        <span class="toggle-slider"></span>
+                    </button>
+                    <span class="theme-icon moon-icon" aria-hidden="true">🌙</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search -->
+        <div class="sidebar-search">
+            <div class="search-wrap">
+                <span class="search-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search conversations…"
+                    aria-label="Search conversations"
+                    autocomplete="off"
+                />
+            </div>
+        </div>
+
+        <!-- Chat list -->
+        <div class="chat-section-label" aria-hidden="true">Messages</div>
+        <div id="chatList" role="list" aria-label="Chat list"></div>
+
+        <!-- Footer -->
+        <footer class="sidebar-footer">
+            <button id="logoutBtn" class="logout-btn" title="Sign out">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Sign Out
+            </button>
+        </footer>
+    </aside>
+
+    <!-- ── CHAT AREA ── -->
+    <main id="chatArea" aria-label="Chat messages">
+
+        <!-- Chat Header -->
+        <header id="chatHeader">
+            <!-- Mobile hamburger -->
+            <button id="sidebarToggle" aria-label="Open sidebar" title="Open conversations">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
+
+            <div class="chat-header-left">
+                <div class="chat-header-avatar-wrap">
+                    <div class="chat-header-avatar" id="chatAvatar" aria-hidden="true">👥</div>
+                    <div class="header-avatar-ring" id="headerAvatarRing"></div>
+                </div>
+                <div class="chat-header-info">
+                    <span id="chatName">Group Chat</span>
+                    <span id="chatStatus">
+                        <span class="status-dot-header" id="statusDotHeader"></span>
+                        0 members online
+                    </span>
+                </div>
+            </div>
+
+            <!-- Only functional action: clear chat -->
+            <div class="chat-header-actions">
+                <button class="icon-btn" id="clearChatBtn" title="Clear messages" aria-label="Clear chat messages">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Messages -->
+        <div id="messages" role="log" aria-live="polite" aria-label="Messages"></div>
+
+        <!-- Typing indicator -->
+        <div id="typingIndicator" class="hidden" aria-live="polite" aria-label="Typing indicator">
+            <div class="typing-bubble">
+                <div class="typing-dots" aria-hidden="true">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                </div>
+            </div>
+            <span class="typing-name">Someone is typing</span>
+        </div>
+
+        <!-- Input area (clean – no placeholder buttons) -->
+        <div id="inputArea">
+            <div class="input-wrap">
+                <textarea
+                    id="messageInput"
+                    placeholder="Type a message…"
+                    rows="1"
+                    maxlength="2000"
+                    aria-label="Message input"
+                    autocomplete="off"
+                    spellcheck="true">
+                </textarea>
+            </div>
+            <button id="sendBtn" aria-label="Send message" title="Send">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </main>
+</div>
+
+<!-- Scripts -->
+<script src="js/theme-manager.js"></script>
+<script src="js/read-receipts.js"></script>
+<script src="js/websocket.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
